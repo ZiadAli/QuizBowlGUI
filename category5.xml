@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Testing>
+    <tournament>
+        <area>hi</area>
+        <categories>
+            <categoryEnabled>true</categoryEnabled>
+            <categoryName>ALL</categoryName>
+            <parentCategory>ALL</parentCategory>
+            <categoryAbbreviation>All</categoryAbbreviation>
+        </categories>
+        <categories>
+            <categoryEnabled>true</categoryEnabled>
+            <categoryName>HISTORY</categoryName>
+            <parentCategory>HISTORY</parentCategory>
+            <categoryAbbreviation>Hist</categoryAbbreviation>
+        </categories>
+        <categories>
+            <categoryEnabled>true</categoryEnabled>
+            <categoryName>American</categoryName>
+            <parentCategory>HISTORY</parentCategory>
+            <categoryAbbreviation>USHist</categoryAbbreviation>
+        </categories>
+        <categories>
+            <categoryEnabled>true</categoryEnabled>
+            <categoryName>European</categoryName>
+            <parentCategory>HISTORY</parentCategory>
+            <categoryAbbreviation>EHist</categoryAbbreviation>
+        </categories>
+        <difficulty>High School</difficulty>
+        <name>category5</name>
+        <teams>
+            <players>
+                <data>PState A$W$6</data>
+                <playerGrade>6</playerGrade>
+                <playerName>Ziad</playerName>
+            </players>
+            <players>
+                <data>PState A$AJ$6</data>
+                <playerGrade>6</playerGrade>
+                <playerName>Manu</playerName>
+            </players>
+            <players>
+                <data>PState A$AW$6</data>
+                <playerGrade>6</playerGrade>
+                <playerName>Jared</playerName>
+            </players>
+            <name>State A</name>
+            <teamCode></teamCode>
+            <coach>Paul</coach>
+            <city>Hi</city>
+            <state>DC</state>
+            <division>2</division>
+            <code></code>
+            <teamName>State A</teamName>
+        </teams>
+    </tournament>
+</Testing>

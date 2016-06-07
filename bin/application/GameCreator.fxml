@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchor" maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GameCreatorController">
+   <children>
+      <ImageView fitHeight="109.0" fitWidth="153.0" layoutX="66.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="109.0" fitWidth="153.0" layoutX="280.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <ChoiceBox fx:id="team1Box" layoutX="66.0" layoutY="137.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="team2Box" layoutX="280.0" layoutY="137.0" prefWidth="150.0" />
+      <Button fx:id="goButton" layoutX="230.0" layoutY="137.0" mnemonicParsing="false" text="Go" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Testing>
+    <tournament>
+        <area>hello</area>
+        <categories>
+            <categoryEnabled>true</categoryEnabled>
+            <categoryName>ALL</categoryName>
+            <parentCategory>ALL</parentCategory>
+            <categoryAbbreviation>All</categoryAbbreviation>
+        </categories>
+        <categories>
+            <categoryEnabled>true</categoryEnabled>
+            <categoryName>HISTORY</categoryName>
+            <parentCategory>HISTORY</parentCategory>
+            <categoryAbbreviation>Hist</categoryAbbreviation>
+        </categories>
+        <categories>
+            <categoryEnabled>true</categoryEnabled>
+            <categoryName>American</categoryName>
+            <parentCategory>HISTORY</parentCategory>
+            <categoryAbbreviation>USHist</categoryAbbreviation>
+        </categories>
+        <categories>
+            <categoryEnabled>true</categoryEnabled>
+            <categoryName>European</categoryName>
+            <parentCategory>HISTORY</parentCategory>
+            <categoryAbbreviation>EHist</categoryAbbreviation>
+        </categories>
+        <categories>
+            <categoryEnabled>true</categoryEnabled>
+            <categoryName>Ancient</categoryName>
+            <parentCategory>HISTORY</parentCategory>
+            <categoryAbbreviation>AnHist</categoryAbbreviation>
+        </categories>
+        <difficulty>High School</difficulty>
+        <name>statets5</name>
+        <statistics>
+            <statisticName>BPts</statisticName>
+        </statistics>
+        <statistics>
+            <statisticName>PPB</statisticName>
+        </statistics>
+    </tournament>
+</Testing>

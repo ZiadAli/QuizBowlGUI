@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TeamHomeController">
+   <children>
+      <ScrollPane fx:id="scrollPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <FlowPane fx:id="flowPane" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="returnButton" mnemonicParsing="false" text="Return" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" text="Save" />
+                  <Button fx:id="addPlayerButton" mnemonicParsing="false" text="Add Player" />
+               </children></FlowPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

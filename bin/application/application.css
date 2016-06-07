@@ -1,0 +1,10 @@
+#buttontest
+{
+	-fx-background-color: linear-gradient(#CF57FF, #9006CD);
+	-fx-background-radius: 1;
+}
+
+#title
+{
+	-fx-background-color: linear-gradient(#0D9CFC, #7CD7FF);
+}
