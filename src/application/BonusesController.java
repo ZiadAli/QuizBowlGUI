@@ -65,6 +65,7 @@ public class BonusesController
 	@FXML Button nextButton;
 	@FXML TextField customText;
 	ArrayList<ToggleButton> pointButtons = new ArrayList<ToggleButton>();
+	MainController mainController = new MainController();
 	
 	@FXML public void initialize()
 	{
@@ -85,6 +86,7 @@ public class BonusesController
 			if(button.isSelected()) bonusScore += 10;
 		}
 		
+		//If user entered something into custom text and it is an actual int then set bonusScore to that
 		if(!customText.getText().equals(""))
 		{
 			try
@@ -97,6 +99,61 @@ public class BonusesController
 			}
 		}
 		
-		System.out.println("Bonus score: " + bonusScore);
+		System.out.println("Bonus Data: " + MainController.scoringTeamBonusColumn + "$" + bonusScore);
+		mainController.addBonusData(GameController.questionNumber, MainController.scoringTeamBonusColumn + "$" + bonusScore);
+		
+		if(Integer.parseInt(MainController.scoringTeamBonusColumn) < Integer.parseInt(MainController.nonScoringTeamBonusColumn))
+		{
+			System.out.println("Current team 1 Question Score: " + mainController.team1QuestionScore);
+			MainController.team1Score += bonusScore;
+			mainController.team1QuestionScore += bonusScore;
+			if(mainController.team1QuestionScore != 0) mainController.addScoreData(GameController.questionNumber, (Integer.parseInt(MainController.scoringTeamBonusColumn) + 1) + "$" + mainController.team1Score);
+			if(mainController.team2QuestionScore != 0) mainController.addScoreData(GameController.questionNumber, (Integer.parseInt(MainController.nonScoringTeamBonusColumn) + 1) + "$" + mainController.team2Score);
+		}
+		else
+		{
+			System.out.println("Current team 2 Question Score: " + mainController.team2QuestionScore);
+			MainController.team2Score += bonusScore;
+			mainController.team2QuestionScore += bonusScore;
+			if(mainController.team2QuestionScore != 0) mainController.addScoreData(GameController.questionNumber, (Integer.parseInt(MainController.scoringTeamBonusColumn) + 1) + "$" + mainController.team2Score);
+			if(mainController.team1QuestionScore != 0) mainController.addScoreData(GameController.questionNumber, (Integer.parseInt(MainController.nonScoringTeamBonusColumn) + 1) + "$" + mainController.team1Score);
+		}
+		
+		System.out.println("Current score is " + mainController.team1Score + " to " + mainController.team2Score);
+		
+		
+		//If the user enabled bonus categories, go to the category selector - otherwise, return back to the game
+		if(mainController.game.bonusCatOn == true)
+		{
+			try 
+			{
+				Stage stage = (Stage) nextButton.getScene().getWindow();
+				Scene oldScene = (Scene) nextButton.getScene();
+				Parent root = FXMLLoader.load(getClass().getResource("/application/Categories.fxml"));
+				Scene scene = new Scene(root, oldScene.getWidth(), oldScene.getHeight()); //Keeps new scene at the same size
+				stage.setScene(scene);
+				stage.show();
+			} 
+			catch(Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			try 
+			{
+				Stage stage = (Stage) nextButton.getScene().getWindow();
+				Scene oldScene = (Scene) nextButton.getScene();
+				Parent root = FXMLLoader.load(getClass().getResource("/application/Game.fxml"));
+				Scene scene = new Scene(root, oldScene.getWidth(), oldScene.getHeight()); //Keeps new scene at the same size
+				stage.setScene(scene);
+				stage.show();
+			} 
+			catch(Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}
 	}	
 }

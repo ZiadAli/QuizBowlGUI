@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Game 
 {
-	public ArrayList<String> playerInfo = new ArrayList<String>();
+	public ArrayList<String> columnHeadings = new ArrayList<String>();
 	public ArrayList<Question> questions = new ArrayList<Question>();
 	public ArrayList<Integer> playerIndices = new ArrayList<Integer>();
 	public HashMap<String, Integer> playerMap = new HashMap<String, Integer>();
@@ -45,65 +45,68 @@ public class Game
 		String team1Code = "";
 		String team2Code = "";
 		
-		playerInfo.add("#");
+		columnHeadings.add("#");
 		if(tossupCatOn)
 		{
-			playerInfo.add("Tossup");
+			columnHeadings.add("Tossup");
 		}
 		for(Player player : team1.players)
 		{
-			playerInfo.add(player.getPlayerName());
+			columnHeadings.add(player.getPlayerName());
 			if(team1.getCode() != "")
 			{
 				team1Code = "!" + team1.getCode();
 			}
 			playerData.add(player.getData() + team1Code + "@" + team2Name);
-			int playerIndex = playerInfo.indexOf(player.getPlayerName());
+			int playerIndex = columnHeadings.indexOf(player.getPlayerName());
 			playerIndices.add(playerIndex);
 			playerMap.put(player.getData(), playerIndex);
 		}
 		if(bbacksOn)
 		{
-			playerInfo.add("BB Points");
-			playerInfo.add("BB Heard");
+			columnHeadings.add("BB Points");
+			columnHeadings.add("BB Heard");
 		}
-		playerInfo.add("B Points");
+		columnHeadings.add("B Points");
 		if(team1.getCode() != "")
 		{
 			bonusData.add("B" + team1.getCode());
-			int bonusIndex = playerInfo.indexOf("B Points");
+			int bonusIndex = columnHeadings.indexOf("B Points");
 			bonusColumnIndices.add(bonusIndex);
+			playerMap.put(team1.getCode(), bonusIndex);
 		}
-		playerInfo.add("Score");
+		columnHeadings.add("Score");
 		if(bonusCatOn)
 		{
-			playerInfo.add("Bonus");
+			columnHeadings.add("Bonus");
+			System.out.println("ADDED BONUS CATEGORIES!!!!!!");
 		}
 		for(Player player : team2.players)
 		{
-			playerInfo.add(player.getPlayerName());
+			columnHeadings.add(player.getPlayerName());
 			if(team2.getCode() != "")
 			{
 				team2Code = "!" + team2.getCode();
 			}
 			playerData.add(player.getData() + team2Code + "@" + team1Name);
-			int playerIndex = playerInfo.indexOf(player.getPlayerName());
+			int playerIndex = columnHeadings.indexOf(player.getPlayerName());
 			playerIndices.add(playerIndex);
 			playerMap.put(player.getData(), playerIndex);
 		}
 		if(bbacksOn)
 		{
-			playerInfo.add("BB Points");
-			playerInfo.add("BB Heard");
+			columnHeadings.add("BB Points");
+			columnHeadings.add("BB Heard");
 		}
-		playerInfo.add("B Points");
+		columnHeadings.add("B Points");
 		if(team2.getCode() != "")
 		{
 			bonusData.add("B" + team2.getCode());
-			int bonusIndex = playerInfo.lastIndexOf("B Points");
+			int bonusIndex = columnHeadings.lastIndexOf("B Points");
 			bonusColumnIndices.add(bonusIndex);
+			playerMap.put(team2.getCode(), bonusIndex);
 		}
-		playerInfo.add("Score");
+		columnHeadings.add("Score");
 	}
 	
 	public void addQuestion(Question question)

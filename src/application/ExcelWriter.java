@@ -1981,7 +1981,7 @@ public class ExcelWriter
 				gameSheet.createRow(startRow+3+i);
 			}
 			Row tableRow = gameSheet.getRow(startRow+3+i);
-			for(int j=0; j < game.playerInfo.size(); j++)
+			for(int j=0; j < game.columnHeadings.size(); j++)
 			{
 				Cell currentCell = tableRow.createCell(startColumn+j);
 				if(i+1== game.questions.size()+2)
@@ -1999,14 +1999,14 @@ public class ExcelWriter
 		{
 			gameSheet.createRow(startRow+i);
 			Row tableRow = gameSheet.getRow(startRow+i);
-			for(int j=0; j<game.playerInfo.size(); j++)
+			for(int j=0; j<game.columnHeadings.size(); j++)
 			{
 				Cell currentCell = tableRow.createCell(startColumn+j);
 				currentCell.setCellStyle(normalStyle);
 			}
 		}
 		gameSheet.createRow(startRow);
-		gameSheet.addMergedRegion(new CellRangeAddress(startRow, startRow, startColumn+1, startColumn+game.playerInfo.size()-2)); //Sets heading and merges cells
+		gameSheet.addMergedRegion(new CellRangeAddress(startRow, startRow, startColumn+1, startColumn+game.columnHeadings.size()-2)); //Sets heading and merges cells
 		Row testRow = gameSheet.getRow(startRow);
 		testRow.createCell(startColumn+1);
 		testRow.getCell(startColumn+1).setCellValue("NAQT HSNCT Round 7");
@@ -2031,11 +2031,11 @@ public class ExcelWriter
 		}
 		
 		gameSheet.addMergedRegion(new CellRangeAddress(startRow+1, startRow+1, startColumn+1, startColumn+game.team1Players+cellRangeAdder)); //Merges team name cells
-		gameSheet.addMergedRegion(new CellRangeAddress(startRow+1, startRow+1, startColumn+cellRangeAdder2, startColumn+game.playerInfo.size()-2));
+		gameSheet.addMergedRegion(new CellRangeAddress(startRow+1, startRow+1, startColumn+cellRangeAdder2, startColumn+game.columnHeadings.size()-2));
 		
 		Row teamRow = gameSheet.getRow(startRow+1);
-		teamRow.getCell(startColumn+1).setCellValue(game.team1Name); //Writes team names in cells
-		teamRow.getCell(startColumn+cellRangeAdder2).setCellValue(game.team2Name);
+		teamRow.getCell(startColumn+1).setCellValue(game.team1Name.replace("_", " ")); //Writes team names in cells
+		teamRow.getCell(startColumn+cellRangeAdder2).setCellValue(game.team2Name.replace("_", " "));
 		teamRow.getCell(startColumn+cellRangeAdder2-1).setCellValue("vs.");
 		teamRow.getCell(startColumn+cellRangeAdder2-1).setCellStyle(headingStyle);
 		
@@ -2067,19 +2067,21 @@ public class ExcelWriter
 		int playerDataIndex = 0;
 		int bonusDataIndex = 0;
 		
-		for(int i=0; i < game.playerInfo.size(); i++) //Sets column headings
+		for(int i=0; i < game.columnHeadings.size(); i++) //Sets column headings
 		{
 			Cell currentCell = playersRow.createCell(startColumn + i);
-			currentCell.setCellValue(game.playerInfo.get(i));
-			if(game.playerInfo.get(i).equals("Tossup"))
+			currentCell.setCellValue(game.columnHeadings.get(i));
+			if(game.columnHeadings.get(i).equals("Tossup"))
 			{
 				Cell dataCell = dataRow.createCell(startColumn+i);
 				dataCell.setCellValue("TCats");
+				dataCell.setCellStyle(hiddenStyle);
 			}
-			else if(game.playerInfo.get(i).equals("Bonus"))
+			else if(game.columnHeadings.get(i).equals("Bonus"))
 			{
 				Cell dataCell = dataRow.createCell(startColumn+i);
 				dataCell.setCellValue("BCats");
+				dataCell.setCellStyle(hiddenStyle);
 			}
 			if(game.bonusColumnIndices.contains(i))
 			{
@@ -2087,6 +2089,7 @@ public class ExcelWriter
 				Cell dataCell = dataRow.createCell(startColumn+i);
 				Cell lastCell = lastRow.getCell(startColumn+i);
 				dataCell.setCellValue(game.bonusData.get(bonusDataIndex));
+				dataCell.setCellStyle(hiddenStyle);
 				lastCell.setCellValue("x");
 				lastCell.setCellStyle(blackStyle);
 				bonusDataIndex++;
@@ -2107,7 +2110,7 @@ public class ExcelWriter
 			{
 				currentCell.setCellStyle(numberStyle);
 			}
-			else if(i+1 == game.playerInfo.size())
+			else if(i+1 == game.columnHeadings.size())
 			{
 				currentCell.setCellStyle(boldStyle);
 				Cell endCell = dataRow.createCell(startColumn+i);
@@ -2126,7 +2129,7 @@ public class ExcelWriter
 			if(gameSheet.getRow(startRow+4+j) == null)
 			{
 				Row qRow = gameSheet.createRow(startRow+4+j);
-				for(int i=0; i<game.playerInfo.size(); i++)
+				for(int i=0; i<game.columnHeadings.size(); i++)
 				{
 					qRow.createCell(startColumn+i);
 					qRow.getCell(startColumn+i).setCellStyle(normalStyle);
@@ -2137,18 +2140,17 @@ public class ExcelWriter
 			questionRow.getCell(startColumn).setCellValue(currentQuestion.qNumber);
 			if(game.isTCatEnabled())
 			{
-				//questionRow.createCell(startColumn+1);
 				questionRow.getCell(startColumn+1).setCellValue(currentQuestion.tossupAbbrev);
 			}
 			if(game.isBCatEnabled())
 			{
-				//questionRow.createCell(startColumn+4+game.team1Players);
 				questionRow.getCell(startColumn+4+game.team1Players).setCellValue(currentQuestion.bonusAbbrev);
 			}
 			
 			for(int i=0; i < currentQuestion.questionData.size(); i++)
 			{
 				String currentData = currentQuestion.questionData.get(i);
+				System.out.println("Current Data: " + currentData);
 				int dollarIndex = currentData.indexOf("$");
 				String columnData = currentData.substring(0, dollarIndex);
 				String pointData = currentData.substring(dollarIndex+1, currentData.length());

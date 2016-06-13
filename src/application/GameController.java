@@ -87,6 +87,7 @@ public class GameController
 	private String scorePlayer = "";
 	
 	public static int questionNumber = 0;
+	public static String teamEarnedBonus = "";
 	
 	Save save = new Save();
 	ExcelWriter eWriter = new ExcelWriter();
@@ -96,8 +97,17 @@ public class GameController
 		
 	@FXML public void initialize()
 	{
+		mainController.team1QuestionScore = 0;
+		mainController.team2QuestionScore = 0;
+		updateScoreLabels();
+		
+		//Resets to true every time because Category Controller turns it off to avoid looping with Bonuses FXML forever
+		//Put a conditional here that only enables it if the user wants to record bonuses
+		MainController.readBonus = true;
+		
 		questionNumber += 1;
-		System.out.println("Application loaded");
+		teamEarnedBonus = "";
+		System.out.println("Game Controller loaded");
 		
 		//Centers components in HBox's 
 		buttonBox.setAlignment(Pos.CENTER);
@@ -112,6 +122,8 @@ public class GameController
 		
 		if(team1 != null && team2 != null)
 		{
+			gameTeam1.setCode(team1.getCode());
+			gameTeam1.setTeamName(team1.getTeamName());
 			for(int i=0; i<team1.players.size(); i++)
 			{
 				ToggleButton playerButton = new ToggleButton(team1.players.get(i).name);
@@ -128,6 +140,8 @@ public class GameController
 				team1Buttons.add(playerButton);
 			}
 			
+			gameTeam2.setCode(team2.getCode());
+			gameTeam2.setTeamName(team2.getTeamName());
 			for(int i=0; i<team2.players.size(); i++)
 			{
 				ToggleButton playerButton = new ToggleButton(team2.players.get(i).name);
@@ -234,8 +248,9 @@ public class GameController
 	public void scoreClicked(ToggleButton button) //Deselects all other score buttons and prints score
 	{
 		System.out.println(scorePlayer + " scored a " + button.getText());
-		
+		//Flags if a score button is selected
 		boolean buttonSelected = false;
+		//Flags if a player earned -5
 		boolean neg5Selected = false;
 
 		if(button.getId().equals("-5")) 
@@ -267,9 +282,42 @@ public class GameController
 	
 	public void nextScene()
 	{	
+		//These ID's will be used to pass the bonus column for the scoring team to the next scene
+		if(!MainController.game.realTeam1.getCode().equals("")) 
+		{
+			buttonBox.setId(MainController.game.playerMap.get(MainController.game.realTeam1.getCode()).toString());
+			buttonBox.setUserData(MainController.game.realTeam1);
+		}
+		if(!MainController.game.realTeam2.getCode().equals("")) 
+		{
+			buttonBoxB.setId(MainController.game.playerMap.get(MainController.game.realTeam2.getCode()).toString());
+			buttonBoxB.setUserData(MainController.game.realTeam2);
+		}
+				
+		//Used to indicate which team scored for bonus recording purposes
+		HBox teamButtonBox = null; 
+		
+		System.out.println("Team 1 Bonus Column: " + MainController.game.playerMap.get(team1.getCode()));
+		System.out.println("Team 2 Bonus Column: " + MainController.game.playerMap.get(team2.getCode()));
+		
 		//If -5 was clicked don't create a new question, keep the existing one
 		if(!neg5Clicked) question = new Question(); 
 		
+		//Checks if the question was dropped so Categories Controller knows to skip the bonus
+		boolean dropClicked = false;
+		if(continueButton.getText().equals("Drop")) dropClicked = true;
+		
+		//Checks if both teams negged. If so, overrides usual neg protocols and still moves on to category window
+		boolean bothTeamsNegged = true;
+		for(int i=0; i<buttonBox.getChildren().size(); i++)
+		{
+			if(buttonBox.getChildren().get(i).isDisabled() == false) bothTeamsNegged = false;
+		}
+		for(int i=0; i<buttonBoxB.getChildren().size(); i++)
+		{
+			if(buttonBoxB.getChildren().get(i).isDisabled() == false) bothTeamsNegged = false;
+		}
+
 		ToggleButton selectedButton = new ToggleButton();
 		selectedButton.setId("0");
 		String score = "";
@@ -278,15 +326,19 @@ public class GameController
 		{
 			if(player.isSelected())
 			{
+				System.out.println("Player Column: " + MainController.game.playerMap.get(player.getId()));
 				score += MainController.game.playerMap.get(player.getId()); //Adds player column to score data
 				player.setSelected(false);
 				player.setDisable(true);
-				HBox teamButtonBox = (HBox) player.getUserData();
+				teamButtonBox = (HBox) player.getUserData();
 				for(int i=0; i<teamButtonBox.getChildren().size(); i++)
 				{
 					teamButtonBox.getChildren().get(i).setDisable(true);
+					noScore = "";
+					noScore += MainController.game.playerMap.get(teamButtonBox.getChildren().get(i).getId());
+					noScore += "$0";
+					question.addData(noScore);
 				}
-				
 			}
 		}
 		for(ToggleButton scoreButton : scoreList)
@@ -296,11 +348,43 @@ public class GameController
 				score += "$" + scoreButton.getId();
 				selectedButton = scoreButton;
 				selectedButton.setSelected(false);
+				
+				//Updates overall team score
+				if(teamButtonBox != null)
+				{
+					if(teamButtonBox.equals(buttonBox)) 
+					{
+						MainController.team1Score += Integer.parseInt(selectedButton.getId());
+						mainController.team1QuestionScore += Integer.parseInt(selectedButton.getId());
+					}
+					else if(teamButtonBox.equals(buttonBoxB)) 
+					{
+						MainController.team2Score += Integer.parseInt(selectedButton.getId());
+						mainController.team2QuestionScore += Integer.parseInt(selectedButton.getId());
+					}
+				}
+				
+				//Sets data for Score column
+				if(teamButtonBox != null)
+				{
+					//Sets the bonus column to the ID of the box containing the scoring player, or the bonus column for that team
+					MainController.scoringTeamBonusColumn = teamButtonBox.getId();
+					
+					//Sets the nonscoring team's column to the ID of the other box
+					if(buttonBox.equals(teamButtonBox)) 
+					{
+						MainController.nonScoringTeamBonusColumn = buttonBoxB.getId();
+					}
+					else
+					{
+						MainController.nonScoringTeamBonusColumn = buttonBox.getId();
+					}
+				}
 			}
 		}
 		
 		if(!selectedButton.getId().equals("-5"))
-		{
+		{	
 			for(ToggleButton player : buttonList)
 			{
 				if(!player.isSelected() && !player.isDisabled()) //Marks down data of all players who didn't score
@@ -320,32 +404,41 @@ public class GameController
 		{
 			System.out.println("Question number: " + questions.qNumber);
 			System.out.println("Question category: " + questions.tossupAbbrev);
+			System.out.println("Bonus category: " + questions.bonusAbbrev);
 			for(int i=0; i<questions.questionData.size(); i++)
 			{
 				System.out.println("Question data: " + questions.questionData.get(i) + " ");
 			}
 		}
 		
-		//Checks if both teams negged. If so, overrides usual neg protocols and still moves on to category window
-		boolean bothTeamsNegged = true;
-		for(int i=0; i<buttonBox.getChildren().size(); i++)
-		{
-			if(buttonBox.getChildren().get(i).isDisabled() == false) bothTeamsNegged = false;
-		}
-		for(int i=0; i<buttonBoxB.getChildren().size(); i++)
-		{
-			if(buttonBoxB.getChildren().get(i).isDisabled() == false) bothTeamsNegged = false;
-		}
-		
+		continueButton.setText("Drop");
+
 		if(selectedButton.getId().equals("-5") && bothTeamsNegged == false)
 		{
 			neg5Clicked = true;
+			updateScoreLabels();
 		}
-		
+				
 		else
 		{
-			neg5Clicked = false;
 			mainController.addQuestion(question);
+			
+			neg5Clicked = false;
+			
+			MainController.readBonus = true;
+			if(bothTeamsNegged == true || dropClicked == true) 
+			{
+				MainController.readBonus = false;
+				System.out.println("Both teams negged or they dropped");
+				
+				//Initializes columns because otherwise they would never be set
+				MainController.scoringTeamBonusColumn = buttonBox.getId();
+				MainController.nonScoringTeamBonusColumn = buttonBoxB.getId();
+				
+				if(mainController.team1QuestionScore != 0) mainController.addScoreData(GameController.questionNumber, (Integer.parseInt(MainController.scoringTeamBonusColumn) + 1) + "$" + mainController.team1Score);
+				if(mainController.team2QuestionScore != 0) mainController.addScoreData(GameController.questionNumber, (Integer.parseInt(MainController.nonScoringTeamBonusColumn) + 1) + "$" + mainController.team2Score);
+			}
+		
 			try 
 			{
 				Stage stage = (Stage) continueButton.getScene().getWindow();
@@ -364,7 +457,9 @@ public class GameController
 	
 	public void done()
 	{
-		questionNumber = 0;		
+		questionNumber = 0;	
+		mainController.game.team1Score = mainController.team1Score;
+		mainController.game.team2Score = mainController.team2Score;
 		mainController.addQuestions();	
 		mainController.addGame(MainController.game);
 		mainController.clearGame();
@@ -445,5 +540,11 @@ public class GameController
 		//eWriter.sortMasterPlayers("Master");
 		//eWriter.sortMasterPlayerCategory("Master");
 		//eWriter.closeWorkbook(eFile);
+	}
+	
+	private void updateScoreLabels()
+	{
+		scoreA.setText(mainController.team1Score + "");
+		scoreB.setText(mainController.team2Score + "");
 	}
 }

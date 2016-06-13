@@ -2,7 +2,7 @@
 <Testing>
     <tournament>
         <dataWritten>false</dataWritten>
-        <area>Dallas</area>
+        <area>hi</area>
         <categories>
             <categoryEnabled>true</categoryEnabled>
             <categoryName>ALL</categoryName>
@@ -478,87 +478,7 @@
             <categoryAbbreviation>Other</categoryAbbreviation>
         </categories>
         <difficulty>High School</difficulty>
-        <games>
-            <playerInfo>#</playerInfo>
-            <playerInfo>Tossup</playerInfo>
-            <playerInfo>Ziad</playerInfo>
-            <playerInfo>B Points</playerInfo>
-            <playerInfo>Score</playerInfo>
-            <playerInfo>Manu</playerInfo>
-            <playerInfo>B Points</playerInfo>
-            <playerInfo>Score</playerInfo>
-            <questions>
-                <bonusAbbrev></bonusAbbrev>
-                <data>5$0</data>
-                <data>2$15</data>
-                <QNumber>1</QNumber>
-                <tossupAbbrev>USHist</tossupAbbrev>
-            </questions>
-            <questions>
-                <bonusAbbrev></bonusAbbrev>
-                <data>2$0</data>
-                <data>5$15</data>
-                <QNumber>2</QNumber>
-                <tossupAbbrev>EHist</tossupAbbrev>
-            </questions>
-            <playerIndices>2</playerIndices>
-            <playerIndices>5</playerIndices>
-            <playerMap>
-                <entry>
-                    <key>PNC_State_B$U$5</key>
-                    <value>5</value>
-                </entry>
-                <entry>
-                    <key>PNC_State_A$U$5</key>
-                    <value>2</value>
-                </entry>
-            </playerMap>
-            <playerData>PNC_State_A$U$5@</playerData>
-            <playerData>PNC_State_B$U$5@</playerData>
-            <tossupCatOn>true</tossupCatOn>
-            <bonusCatOn>false</bonusCatOn>
-            <team1Players>1</team1Players>
-            <team2Players>1</team2Players>
-            <team1Name></team1Name>
-            <team2Name></team2Name>
-            <team1Score>0</team1Score>
-            <team2Score>0</team2Score>
-            <realTeam1>
-                <players>
-                    <dataWritten>false</dataWritten>
-                    <data>PNC_State_A$U$5</data>
-                    <playerName>Ziad</playerName>
-                </players>
-                <name></name>
-                <teamCode></teamCode>
-                <coach></coach>
-                <city></city>
-                <state></state>
-                <division></division>
-                <dataWritten>false</dataWritten>
-                <code></code>
-                <teamName></teamName>
-            </realTeam1>
-            <realTeam2>
-                <players>
-                    <dataWritten>false</dataWritten>
-                    <data>PNC_State_B$U$5</data>
-                    <playerName>Manu</playerName>
-                </players>
-                <name></name>
-                <teamCode></teamCode>
-                <coach></coach>
-                <city></city>
-                <state></state>
-                <division></division>
-                <dataWritten>false</dataWritten>
-                <code></code>
-                <teamName></teamName>
-            </realTeam2>
-            <bouncebacksOn>false</bouncebacksOn>
-            <writtenExcel>true</writtenExcel>
-        </games>
-        <name>11SummerTest3</name>
+        <name>11SummerTest6</name>
         <statistics>
             <statisticEnabled>true</statisticEnabled>
             <statisticName>PP20TH</statisticName>
@@ -657,46 +577,41 @@
         </statistics>
         <teams>
             <players>
-                <dataWritten>true</dataWritten>
-                <data>PNC_State_A$U$5</data>
+                <dataWritten>false</dataWritten>
+                <data>PECG_A$U$5</data>
                 <playerGrade>6</playerGrade>
                 <playerName>Ziad</playerName>
             </players>
-            <name>NC_State_A</name>
-            <teamCode></teamCode>
-            <coach>hi</coach>
-            <city>hi</city>
-            <state>DE</state>
-            <division>hi</division>
-            <dataWritten>true</dataWritten>
-            <code></code>
-            <teamName>NC_State_A</teamName>
-        </teams>
-        <teams>
             <players>
-                <dataWritten>true</dataWritten>
-                <data>PNC_State_B$U$5</data>
-                <playerGrade>7</playerGrade>
+                <dataWritten>false</dataWritten>
+                <data>PECG_A$AH$5</data>
+                <playerGrade>8</playerGrade>
                 <playerName>Manu</playerName>
             </players>
-            <name>NC_State_B</name>
+            <name>ECG_A</name>
             <teamCode></teamCode>
             <coach>hi</coach>
             <city>hi</city>
             <state>DE</state>
             <division>hi</division>
-            <dataWritten>true</dataWritten>
+            <dataWritten>false</dataWritten>
             <code></code>
-            <teamName>NC_State_B</teamName>
+            <teamName>ECG_A</teamName>
         </teams>
         <teams>
             <players>
                 <dataWritten>false</dataWritten>
-                <data>PNC_State_C$U$5</data>
+                <data></data>
                 <playerGrade>6</playerGrade>
                 <playerName>Jared</playerName>
             </players>
-            <name>NC_State_C</name>
+            <players>
+                <dataWritten>false</dataWritten>
+                <data></data>
+                <playerGrade>7</playerGrade>
+                <playerName>Malay</playerName>
+            </players>
+            <name>ECG_B</name>
             <teamCode></teamCode>
             <coach>hi</coach>
             <city>hi</city>
@@ -704,24 +619,7 @@
             <division>hi</division>
             <dataWritten>false</dataWritten>
             <code></code>
-            <teamName>NC_State_C</teamName>
-        </teams>
-        <teams>
-            <players>
-                <dataWritten>false</dataWritten>
-                <data></data>
-                <playerGrade>7</playerGrade>
-                <playerName>Jacob</playerName>
-            </players>
-            <name>NC_State_D</name>
-            <teamCode></teamCode>
-            <coach>hi</coach>
-            <city>hi</city>
-            <state>DE</state>
-            <division>hi</division>
-            <dataWritten>false</dataWritten>
-            <code></code>
-            <teamName>NC_State_D</teamName>
+            <teamName>ECG_B</teamName>
         </teams>
     </tournament>
 </Testing>

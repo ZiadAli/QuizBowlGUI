@@ -212,6 +212,13 @@ public class GameCreatorController
 	{
 		Team team1 = new Team();
 		Team team2 = new Team();
+		
+		//Adds ID for each team
+		team1.setCode(team1Box.getValue() + "$B$5");
+		team1.setTeamName(team1Box.getValue());
+		team2.setCode(team2Box.getValue() + "$B$5");
+		team2.setTeamName(team2Box.getValue());
+		
 		for(ComboBox<String> box : team1Boxes)
 		{
 			if(box.getValue() != null)
@@ -237,7 +244,7 @@ public class GameCreatorController
 			{
 				GameController.team1 = team1;
 				GameController.team2 = team2;
-				Game game = new Game(team1, team2, "Test Tournament", "Round 1", true, false, false);
+				Game game = new Game(team1, team2, "Test Tournament", "Round 1", true, true, false);
 				GameController.game = game;
 				
 				try 

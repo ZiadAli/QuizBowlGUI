@@ -138,6 +138,7 @@ public class CategoriesController
 	
 	public void nextScene()
 	{
+		//Gets the selected subcategory to pass to the question
 		String categoryAbbrev = "";
 		for(ToggleButton button : subcategoryButtons)
 		{
@@ -146,19 +147,47 @@ public class CategoriesController
 				categoryAbbrev = button.getId();
 			}
 		}
-		mainController.setTossupCategory(GameController.questionNumber, categoryAbbrev);
-		try 
+		if(mainController.checkIfTossupCategorySet(GameController.questionNumber) == false)
+			mainController.setTossupCategory(GameController.questionNumber, categoryAbbrev);
+		else
+			mainController.setBonusCategory(GameController.questionNumber, categoryAbbrev);
+		
+		//If one team earned a bonus, go to the bonus screen
+		if(MainController.readBonus == true)
 		{
-			Stage stage = (Stage) nextButton.getScene().getWindow();
-			Scene oldScene = (Scene) nextButton.getScene();
-			Parent root = FXMLLoader.load(getClass().getResource("/application/Game.fxml"));
-			Scene scene = new Scene(root, oldScene.getWidth(), oldScene.getHeight()); //Keeps new scene at the same size
-			stage.setScene(scene);
-			stage.show();
-		} 
-		catch(Exception e) 
-		{
-			e.printStackTrace();
+			MainController.readBonus = false;
+			try 
+			{
+				Stage stage = (Stage) nextButton.getScene().getWindow();
+				Scene oldScene = (Scene) nextButton.getScene();
+				Parent root = FXMLLoader.load(getClass().getResource("/application/Bonuses.fxml"));
+				Scene scene = new Scene(root, oldScene.getWidth(), oldScene.getHeight()); //Keeps new scene at the same size
+				stage.setScene(scene);
+				stage.show();
+			} 
+			catch(Exception e) 
+			{
+				e.printStackTrace();
+			}
 		}
+		
+		//If not, go back to the game screen
+		else
+		{
+			try 
+			{
+				Stage stage = (Stage) nextButton.getScene().getWindow();
+				Scene oldScene = (Scene) nextButton.getScene();
+				Parent root = FXMLLoader.load(getClass().getResource("/application/Game.fxml"));
+				Scene scene = new Scene(root, oldScene.getWidth(), oldScene.getHeight()); //Keeps new scene at the same size
+				stage.setScene(scene);
+				stage.show();
+			} 
+			catch(Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		
 	}
 }

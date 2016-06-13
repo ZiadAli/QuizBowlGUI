@@ -7,10 +7,17 @@ import javafx.fxml.FXML;
 public class MainController 
 {
 	public static Tournament mainTournament = new Tournament();
+	public static boolean readBonus = true;
 	protected static Game game;
 	protected static ArrayList<Category> enabledCategoryList = new ArrayList<Category>();
 	protected static ArrayList<Statistic> enabledStatisticList = new ArrayList<Statistic>();
 	protected static ArrayList<Question> questions = new ArrayList<Question>();
+	public static String scoringTeamBonusColumn = "";
+	public static String nonScoringTeamBonusColumn = "";
+	public static int team1QuestionScore = 0;
+	public static int team2QuestionScore = 0;
+	public static int team1Score = 0;
+	public static int team2Score = 0;
 	Settings settings = new Settings();
 
 	@FXML public void initialize()
@@ -69,7 +76,7 @@ public class MainController
 	
 	public void createGame(Team team1, Team team2)
 	{
-		game = new Game(team1, team2, "Test Tournament", "Round 1", true, false, false);
+		game = new Game(team1, team2, "Test Tournament", "Round 1", true, true, false);
 	}
 	
 	public void clearGame()
@@ -111,6 +118,31 @@ public class MainController
 		question.setTossupAbbrev(tossupAbbreviation);
 	}
 	
+	public boolean checkIfTossupCategorySet(int questionNumber)
+	{
+		Question question = questions.get(questionNumber-1);
+		if(!question.tossupAbbrev.equals("")) return true;
+		else return false;
+	}
+	
+	public void setBonusCategory(int questionNumber, String bonusAbbreviation)
+	{
+		Question question = questions.get(questionNumber-1);
+		question.setBonusAbbrev(bonusAbbreviation);
+	}
+	
+	public void addBonusData(int questionNumber, String data)
+	{
+		Question question = questions.get(questionNumber-1);
+		question.addData(data);
+	}
+	
+	public void addScoreData(int questionNumber, String data)
+	{
+		Question question = questions.get(questionNumber-1);
+		question.addData(data);
+	}
+		
 	public void setTournament(Tournament tournament)
 	{
 		mainTournament = tournament;
